@@ -2,17 +2,18 @@
 //by "the Muratorium"
 import React, {useState,useRef,useEffect} from 'react'
 import {Viz} from './Viz'
-import useInterval from "./useInterval";
 import {csv,csvParse} from 'd3';
 import useSWR, {SWRConfig,useSWRConfig} from 'swr'
 import axios from 'axios';
-import { filerecords } from './filerecord';
+import { laggy } from './laggy';
+
 
 const rawdata=[{"count":5000,"max":0},{"count":5000,"max":100}];
 
-filerecords('teste');
-
 var csvUrl
+
+
+
 
 csvUrl='https://raw.githubusercontent.com/Jon83Carvalho/DataAndArt/main/LoveWord.csv'
 csvUrl='/data/data.json'
@@ -27,121 +28,52 @@ const resp= await request
   return resp;
 };
 
-
+//localStorage.setItem('pdata', 'teste')
 
 export const App=()=>{
   const iteration=useRef()
   const [start, setStart]   = useState(false);
+  const previousdata = useRef();
   const respdata=useRef()
-  const previousdata=useRef()
+  
   const svgRef = useRef();
-    
-  const {data} = useSWR(csvUrl,fetcher)
-
-  function usePrevious (value){
-    const ref=useRef()
-  useEffect(()=>{
-    ref.current=value
-  },[value]);
-
-  return ref.current
-
-}
-
-////////
-
-//////////////
-console.log("data",data)
-
-
-useEffect (()=>{
-  iteration.current=1
-
-})
-
-if(typeof data==='undefined'& typeof iteration.current==='undefined'){
-  respdata.current=rawdata[0]
   
-}else{
-  previousdata.current=data
-}
 
-console.log("current",respdata.current)
-//const previousdata= usePrevious(respdata.current)
+  const {data} = useSWR(csvUrl,fetcher,{
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateOnMount:true,
+    use:[laggy]
+  })
 
 
+previousdata.current=localStorage.getItem('pdata')
+previousdata.current=csvParse(previousdata.current,
+  (d)=>{
+    d.max=+d.max;
+     return d}
+     )
 
-
-
-console.log("previous",previousdata)
   
-  if (!data) {return <div>loading...</div>}
-    
+if (!data) {return <div></div>}
 
 respdata.current=data
-
-  //useInterval(() => {
-  //  if (start) { 
-  //  console.log("teste");
-  // respdata=csvParse(data)
-  //  mutate(csvUrl)
-  //  }
-  //}
-  //  , 2000);
-
-
-//respdata=csvParse(data)
-//if(iteration===1){
-
-// setpData(respdata.max)
-
-//}
-
-
-//setIteration(iteration + 1);
-console.log("ACTUAL",data,"PREVIOUS",previousdata)
+localStorage.setItem('pdata', `count,max\n${respdata.current.count},${respdata.current.max}`);
 
 
 
-//
-
-    
-//      if (start) {
-      
-      
- //     setpData(data[0].max)
-
-
-//      csvUrl='https://raw.githubusercontent.com/Jon83Carvalho/DataAndArt/main/LoveWord.csv?v='+ Math.random()*100+makeid(Math.floor(Math.random()*10)*Math.floor(Math.random()*10))
-          
-   		//csv(csvUrl,row).then(setData);
-      
-      
-//      if(data) {
-//          console.log(data[0],csvUrl)
-     
-///      }
-      
-
-//      setIteration(iteration + 1);
-
-///    
-  
+if(typeof data!=='undefined'){
+  console.log("ACTUAL",data.max,"PREVIOUS",previousdata.current[0].max)
   return (
-
+    
   	<>
-    
-    
-    
-    <Viz x={respdata.current.max} svgRef={svgRef} previousx={previousdata}/>
-    
+    <Viz x={respdata.current.max} svgRef={svgRef} previousx={previousdata.current[0].max}/>
       <button onClick={() => setStart(!start)}>
         {start ? "End Animation" : "Start Animation"}
       </button>
-      
     </>
-    
-  );
+  );}
 }
 
 //export const App=function(){

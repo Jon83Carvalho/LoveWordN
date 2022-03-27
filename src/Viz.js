@@ -38,7 +38,7 @@ export const Viz=({x,svgRef,previousx})=>{
 
   return (
     <React.Fragment>
-      <div ref={wrapperRef}>
+      <div >
       <svg ref={svgRef}></svg>
       </div>
       </React.Fragment>
