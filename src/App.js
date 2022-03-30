@@ -49,6 +49,11 @@ export const App=()=>{
 
 
 previousdata.current=localStorage.getItem('pdata')
+if (previousdata.current===null){
+  localStorage.setItem('pdata',`count,max\n${rawdata[0].count},${rawdata[0].max}`);
+  previousdata.current=localStorage.getItem('pdata');
+}
+console.log(previousdata.current)
 previousdata.current=csvParse(previousdata.current,
   (d)=>{
     d.max=+d.max;

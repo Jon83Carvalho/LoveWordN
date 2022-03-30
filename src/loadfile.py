@@ -45,7 +45,7 @@ for count in range(100):
  #   data['max']=0 if data['max']+newmax<0 else data['max']+newmax
     s3data=gets3data()
     data=json.loads(s3data)
-    data['max']=data['count']/data['max']
+    data['max']=(data['count']/data['max']/10-floor(data['count']/data['max']/10))*100
     databyte=json.dumps(data).encode('utf8')
  
     with open(path,'wb') as datafile:
