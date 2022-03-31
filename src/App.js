@@ -74,9 +74,7 @@ if(typeof data!=='undefined'){
     
   	<>
     <Viz x={respdata.current.max} svgRef={svgRef} previousx={previousdata.current[0].max}/>
-      <button onClick={() => setStart(!start)}>
-        {start ? "End Animation" : "Start Animation"}
-      </button>
+      
     </>
   );}
 }
