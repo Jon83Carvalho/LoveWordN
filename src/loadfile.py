@@ -8,7 +8,8 @@ from gets3data import gets3data
 
 # File path 
 path = "C:/Users/jonas/Documents/DataScience/DataArt/Projeto2 - LoveWord/LoveWord/LoveWNode/using-react-hooks-with-d3/public/data/data.json"
-  
+
+#path="/home/ec2-user/LoveWordN/public/data/data.json"
   
 # Open the file and get
 # the file descriptor associated

@@ -75,6 +75,7 @@ export const Viz=({x,svgRef,previousx})=>{
           .attr("y",`${screenheight/2-size(previousx)*(1+gap*(d+1))/2}`)
           .attr("width", size(previousx)*(1+gap*(d+1)))
           .attr("height", size(previousx)*(1+gap*(d+1)))
+          .attr("opacity",0.3)
           .transition()
           .delay(500*(1+gap*(d+1)))
           .duration(du*(1+gap*0.8*(d+1)))
