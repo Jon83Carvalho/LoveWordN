@@ -13,13 +13,18 @@ export const Viz=({x,svgRef,previousx})=>{
   useEffect(()=>{
     const du=5000
   	const svg=select(svgRef.current)
-    const size=scaleLinear()
-       .domain(extent([10,500]))
-       .range([10,900])
+    
+
       svg
         .attr("width","100%")
         .attr("height","100vh")
-    
+
+        const screenwidth=+select("#root").style("width").slice(0,-2)
+        const screenheight=+select("#root").style("height").slice(0,-2)
+          
+        const size=scaleLinear()
+           .domain(extent([0,150]))
+           .range([20,screenwidth])
  
    //   svg
    //   .selectAll(".teste")
@@ -59,8 +64,6 @@ export const Viz=({x,svgRef,previousx})=>{
  //     })
       const array=range(10)
       const gap=0.7
-      const screenwidth=+select("#root").style("width").slice(0,-2)
-      const screenheight=+select("#root").style("height").slice(0,-2)
       
 
       array.map((d,i)=>{
@@ -84,7 +87,7 @@ export const Viz=({x,svgRef,previousx})=>{
           .attr("x",`${screenwidth/2-size(x)*(1+gap*(d+1))/2}`)
           .attr("y",`${screenheight/2-size(x)*(1+gap*(d+1))/2}`)
 
-          setTimeout(() => { }, 300);
+          
         })
 
       })
