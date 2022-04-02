@@ -26,8 +26,8 @@ export const Viz=({x,svgRef,previousx})=>{
         const screenheight=+select("#root").style("height").slice(0,-2)
           
         const size=scaleLinear()
-           .domain(extent([0,150]))
-           .range([20,screenwidth])
+           .domain(extent([0,350]))
+           .range([10,screenwidth*2])
  
 
       const array=range(10)
@@ -57,7 +57,7 @@ var k=0
           .attr("y",`${screenheight/2-size(x)*(1+gap*(k+1))/2}`)
         
           k=k+1
-          console.log(k)
+          
         })
         
         
