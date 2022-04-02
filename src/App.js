@@ -2,6 +2,7 @@
 //by "the Muratorium"
 import React, {useState,useRef,useEffect} from 'react'
 import {Viz} from './Viz'
+
 import {csv,csvParse} from 'd3';
 import useSWR, {SWRConfig,useSWRConfig} from 'swr'
 import axios from 'axios';
@@ -61,7 +62,9 @@ previousdata.current=csvParse(previousdata.current,
      )
 
   
-if (!data) {return <div></div>}
+if (!data) {return <div>
+
+</div>}
 
 respdata.current=data
 localStorage.setItem('pdata', `count,max\n${respdata.current.count},${respdata.current.max}`);
@@ -78,8 +81,3 @@ if(typeof data!=='undefined'){
     </>
   );}
 }
-
-//export const App=function(){
-//  const [data,setData]=useState(initialdata);
-//  return <Viz/>
-//}
