@@ -26,21 +26,27 @@ export const Viz=({x,svgRef,previousx})=>{
         const screenheight=+select("#root").style("height").slice(0,-2)
           
         const size=scaleLinear()
-           .domain(extent([0,350]))
-           .range([10,screenwidth*2])
+           .domain(extent([0,1500]))
+           .range([10,screenwidth])
  
-
-      const array=range(10)
+      const len=30
+      const array=range(len)
 
 
       const gap=0.7
-      console.log(array)
+      const del=0.05
+      const g=svg.append("g")
+      
 var k=0
       array.map((d,i)=>{
 
         xml("heart.svg").then(data=>{
-          svg.node().append(data.documentElement.childNodes[1])
-          const img2 = svg.select(`image:nth-child(${k+1})`)  
+         
+          
+          g.node().append(data.documentElement.childNodes[1])
+
+       
+          const img2 = g.select(`image:nth-child(${k+1})`)  
 
           img2
           .attr("x",`${screenwidth/2-size(previousx)*(1+gap*(k+1))/2}`)
@@ -49,23 +55,45 @@ var k=0
           .attr("height", size(previousx)*(1+gap*(k+1)))
           .attr("opacity",0.3)
           .transition()
-          .delay(500*(1+gap*(k+1)))
-          .duration(du*(1+gap*0.8*(k+1)))
+          .delay(()=>{
+            if (previousx-x>0){
+              return 0//500*(1+del*(len-k))
+          } else {
+            return 0//500*(1+del*(k))
+
+          }
+          })
+          .duration(du*(1+gap*del*(k)))
           .attr("width", size(x)*(1+gap*(k+1)))
           .attr("height", size(x)*(1+gap*(k+1)))
           .attr("x",`${screenwidth/2-size(x)*(1+gap*(k+1))/2}`)
           .attr("y",`${screenheight/2-size(x)*(1+gap*(k+1))/2}`)
         
+          
+
           k=k+1
+          if(k==len){
+            g
+            .append("text") 
+            .text("Developed by jonas 03/04/2022")
+            .attr("x",`${screenwidth/2-90}`)
+            .attr("y",`${screenheight-100}`)
+            .attr("id","author")
+            .attr("fill","gray")
+            .attr("style","font-family: 'Yanone Kaffeesatz', sans-serif;")
+            
+           }
+          svg.selectAll("text").raise()
           
         })
         
         
+        
+        
 
       })
-
-      
-
+     
+ 
 
   },[x])
   
@@ -73,8 +101,10 @@ var k=0
   return (
     <React.Fragment>
       
-      <svg id="images" ref={svgRef}></svg>
-      
+      <svg id="images" ref={svgRef} fill="none">
+
+      </svg>
+     
       </React.Fragment>
    
   )
