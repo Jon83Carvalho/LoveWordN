@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import ReactDOM from 'react-dom';
-import {select,xml,scaleLinear,extent,range} from "d3";
+import {select,xml,scaleLinear,extent,range,max,min} from "d3";
 
 
 
@@ -26,11 +26,18 @@ export const Viz=({x,svgRef,previousx})=>{
         const size=scaleLinear()
            .domain(extent([0,1500]))
            .range([10,screenwidth])
+
+           const sizey=scaleLinear()
+           .domain(extent([0,1500]))
+           .range([10,screenheight])
+      
+      
  
-      const len=30
+      const len=50
       const array=range(len)
 
 
+      var gapy
       const gap=0.7
       const del=0.05
       const g=svg.append("g")  
@@ -44,20 +51,26 @@ export const Viz=({x,svgRef,previousx})=>{
         g.node().append(data.documentElement.childNodes[1])
 
        
-          const img2 = g.select(`image:nth-child(${k+1})`)  
-
+          const img2 = g.select(`image:nth-child(${k+1})`) 
+          const previousw=size(previousx)*(1+gap*(k+1))
+          const previoush=sizey(previousx)*(1+gap*(k+1)) 
+          const currentw=size(x)*(1+gap*(k+1))
+          const currenth=sizey(x)*(1+gap*(k+1)) 
+          console.log("w: ",previousw,"h: ",previoush)
+          console.log("min/max: ",min([previoush,previousw])/max([previoush,previousw]))
+          
           img2
-          .attr("x",`${screenwidth/2-size(previousx)*(1+gap*(k+1))/2}`)
-          .attr("y",`${screenheight/2-size(previousx)*(1+gap*(k+1))/2}`)
-          .attr("width", size(previousx)*(1+gap*(k+1)))
-          .attr("height", size(previousx)*(1+gap*(k+1)))
-          .attr("opacity",0.2)
+          .attr("x",`${screenwidth/2-previousw/2}`)
+          .attr("y",`${screenheight/2-previoush/2}`)
+          .attr("width", previousw)
+          .attr("height", previoush)
+          .attr("opacity",0.8)
           .transition()
           .duration(du*(1+gap*del*(k)))
-          .attr("width", size(x)*(1+gap*(k+1)))
-          .attr("height", size(x)*(1+gap*(k+1)))
-          .attr("x",`${screenwidth/2-size(x)*(1+gap*(k+1))/2}`)
-          .attr("y",`${screenheight/2-size(x)*(1+gap*(k+1))/2}`)
+          .attr("width", currentw)
+          .attr("height", currenth)
+          .attr("x",`${screenwidth/2-currentw/2}`)
+          .attr("y",`${screenheight/2-currenth/2}`)
                  
 
           k=k+1
@@ -69,7 +82,7 @@ export const Viz=({x,svgRef,previousx})=>{
             .attr("x",`${screenwidth/2-100}`)
             .attr("y",`${screenheight-100}`)
             .attr("id","author")
-            .attr("fill","gray")
+            .attr("fill","#997788")
             .attr("style","font-family: 'Yanone Kaffeesatz', sans-serif;")
             
            }
