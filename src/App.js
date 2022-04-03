@@ -54,7 +54,7 @@ if (previousdata.current===null){
   localStorage.setItem('pdata',`count,max\n${rawdata[0].count},${rawdata[0].max}`);
   previousdata.current=localStorage.getItem('pdata');
 }
-console.log(previousdata.current)
+
 previousdata.current=csvParse(previousdata.current,
   (d)=>{
     d.max=+d.max;
@@ -72,7 +72,7 @@ localStorage.setItem('pdata', `count,max\n${respdata.current.count},${respdata.c
 
 
 if(typeof data!=='undefined'){
-  console.log("ACTUAL",data.max,"PREVIOUS",previousdata.current[0].max)
+  
   return (
     
   	<>
