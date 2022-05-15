@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bro-fs": "^0.6.0",
     "d3": "^7.3.0",
     "ml5": "^0.10.1",
     "react": "^16.10.2",
