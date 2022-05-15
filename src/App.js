@@ -41,10 +41,11 @@ export const App=()=>{
   
 
   const {data} = useSWR(csvUrl,fetcher,{
-    revalidateIfStale: false,
+    revalidateIfStale: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateOnMount:true,
+    refreshInterval: 1000,
     use:[laggy]
   })
 

@@ -42,12 +42,13 @@ export const Viz=({x,svgRef,previousx})=>{
       const del=0.05
       const g=svg.append("g")  
       var k=0
-   
+      
+      svg.selectAll('image').remove()
       array.map((d,i)=>{
 
         xml("heart.svg").then(data=>{
          
-     
+        
         g.node().append(data.documentElement.childNodes[1])
 
        
