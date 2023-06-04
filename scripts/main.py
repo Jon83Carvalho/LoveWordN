@@ -11,7 +11,7 @@ origins = [
     "http://192.168.15.6:19006",
     "http://localhost:19006",
     "http://192.168.15.9",
-    "http://0.0.0.0"
+    "http://www.datandart.com"
 
 ]
 
