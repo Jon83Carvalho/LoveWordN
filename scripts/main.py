@@ -29,4 +29,4 @@ def root():
     data=get_love()
     print(data)
 
-    return data
+    return str(data)
