@@ -32,7 +32,7 @@ def get_love():
 
     final=datetime.now()    
     datadict={"count":numtweets,"max":deltaT}
-    print("Total Tweets fetched:nice",before,after,final,datadict)
+    #print("Total Tweets fetched:nice",before,after,final,datadict)
 
     return datadict
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from get_love import get_love
+import json
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -25,10 +25,21 @@ app.add_middleware(
 
 
 
+
+
 @app.get("/")
 def root():
+    path = "data.json"
+
+    # Open the file and get
+    # the file descriptor associated
+    # with it using os.open() method
+    fd = open(path)
+
+    data=json.load(fd)
+
+    fd.close
     
-    data=get_love()
     print(data)
 
     return data
