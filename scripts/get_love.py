@@ -1,10 +1,5 @@
-import json
-import pandas as pd
-import boto3
-import csv
 import tweepy as tw
 from datetime import datetime
-from io import StringIO # python3; python2: BytesIO 
 import os
 
 #collect twitter keys
